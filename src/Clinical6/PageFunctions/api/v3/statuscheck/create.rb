@@ -5,10 +5,11 @@ module V3
     class Create < BaseAPI
 
       def payload
+        #type could be CrTrials::SiteMember
         @payload ||= JSON.parse(<<-JSON)
         {
           "data": {
-            "type": "CrTrials::SiteMember",
+            "type": "#{type}",
             "id": "1"
           }
         }
@@ -25,12 +26,13 @@ module V3
         return response
       end
 
-      attr_reader :email, :environment, :token
+      attr_reader :email, :environment, :token, :type
 
-      def initialize(token, email, environment)
+      def initialize(token, email, environment, type)
         @email = email
         @env = environment
         @token = token
+        @type = type
       end
 
       def response

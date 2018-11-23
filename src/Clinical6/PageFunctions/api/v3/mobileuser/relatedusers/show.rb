@@ -17,6 +17,16 @@ module V3
         return response
       end
 
+      private def get_show_filter
+        response = RestClient.get("https://#{@env}/v3/mobile_users/#{@id}/related_users?filter=followers",
+                                  { content_type: :json,
+                                    'X-User-Token' => @token,
+                                    'X-User-Username' => @email }
+        ) { |response, request, result| response }
+        BaseAPI.print_request_response(response.headers.to_s, response.body.to_s, response.request.inspect + response.request.headers.to_s)
+        return response
+      end
+
       def initialize(token, email, environment, id)
         @token = token
         @email = email
@@ -26,6 +36,10 @@ module V3
 
       def response
         @response ||= get_show
+      end
+
+      def response_filter
+        @response ||= get_show_filter
       end
 
       end

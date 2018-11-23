@@ -15,6 +15,15 @@ module V3
           return response
         end
 
+        private def get_index_by_mobile
+          response = RestClient.get("https://#{@env}/v3/data_collection/captured_value_groups",
+                                    { content_type: :json,
+                                      'Authorization' => "Token token=#{@token}" }
+          ) { |response, request, result| response }
+          BaseAPI.print_request_response(response.headers.to_s, response.body.to_s, response.request.inspect + response.request.headers.to_s)
+          return response
+        end
+
         attr_reader :email, :token, :env
 
         def initialize(token, email, environment)
@@ -25,6 +34,10 @@ module V3
 
         def response
           @response ||= get_index
+        end
+
+        def response_mobile
+          @response ||= get_index_by_mobile
         end
 
         def count

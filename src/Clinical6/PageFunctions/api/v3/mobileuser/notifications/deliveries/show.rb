@@ -4,10 +4,10 @@ module V3
   module MobileUser
     module Notifications
       module Deliveries
-        class Index < BaseAPI
+        class Show < BaseAPI
 
-          private def get_index
-            response = RestClient.get("https://#{@env}/v3/mobile_users/#{mobile_id}/notifications/deliveries",
+          private def get_show
+            response = RestClient.get("https://#{@env}/v3/mobile_users/#{mobile_id}/notifications/deliveries/#{id}",
                                       { content_type: :json, Accept: :json,
                                         'X-User-Token' => @token,
                                         'X-User-Username' => @email }
@@ -16,25 +16,18 @@ module V3
             return response
           end
 
-          attr_reader :email, :token, :env, :mobile_id
+          attr_reader :email, :token, :env, :id, :mobile_id
 
-          def initialize(token, email, environment, mobile_id)
+          def initialize(token, email, environment, id, mobile_id)
             @email = email
             @env = environment
             @token = token
+            @id = id
             @mobile_id = mobile_id
           end
 
           def response
-            @response ||= get_index
-          end
-
-          def count
-            @count ||= JSON.parse(response.body)["data"].size
-          end
-
-          def id
-            @id ||= JSON.parse(response.body).dig('data', count-1, 'id')
+            @response ||= get_show
           end
 
         end

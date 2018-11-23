@@ -49,6 +49,15 @@ module V3
           return response
         end
 
+        private def post_create_by_mobile
+          response = RestClient.post("https://#{@env}/v3/data_collection/flow_process_values", payload.to_json,
+                                     { content_type: :json,
+                                       'Authorization' => "Token token=#{@token}" }
+          ) { |response, request, result| response }
+          BaseAPI.print_request_response(response.headers.to_s, response.body.to_s, response.request.inspect + response.request.headers.to_s, payload.to_s)
+          return response
+        end
+
         attr_reader :email, :environment, :flow_id, :mobile_id, :group_id, :text
 
         def initialize(token, email, environment, flow_id, mobile_id, group_id, text)
@@ -63,6 +72,10 @@ module V3
 
         def response
           @response ||= post_create
+        end
+
+        def response_mobile
+          @response ||= post_create_by_mobile
         end
 
       end
