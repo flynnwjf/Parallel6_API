@@ -35,6 +35,11 @@ module V3
           @id ||= JSON.parse(response).dig("data", (count - 1), "id")
         end
 
+        def type
+          @id ||= JSON.parse(response).dig("data", (count - 1), "attributes", "type")
+        end
+
+
       end
     end
   end

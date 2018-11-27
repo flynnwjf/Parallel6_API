@@ -25,6 +25,8 @@ module V3
           @file = file
           if (@file == 'new')
             @file = File.new(File.dirname(__FILE__) + '/logo-nav.PNG')
+          elsif (@file == 'large')
+            @file = File.new(File.dirname(__FILE__) + '/20MSample.jpg')
           end
           @attribute = attribute
         end

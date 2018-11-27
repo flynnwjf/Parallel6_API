@@ -73,7 +73,7 @@ context 'Core Test', test_rail: true do
     test_rail_result(4, "updating consent form response code: #{resp_code}", "pass")
 
     #Step5 The user makes a Patch request on {{protocol}}{{url}}/v3/consent/forms with invalid name
-    test_rail_expected_result(4, "REST Tool returns a 422 response with the error message detail can't be blank.")
+    test_rail_expected_result(5, "REST Tool returns a 422 response with the error message detail can't be blank.")
     #Patch request on {{protocol}}{{url}}/v3/consent/forms
     invalid_name = ""
     form_update = V3::Consent::Forms::Update.new(super_user_session.token, user_email, base_url, form_id, invalid_name)

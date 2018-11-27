@@ -27,6 +27,14 @@ module V3
           @response ||= index_session
         end
 
+        def count
+          @count ||= JSON.parse(response.body)["data"].size
+        end
+
+        def id
+          @id ||= JSON.parse(response).dig("data", (count - 1), "id")
+        end
+
       end
     end
   end
